@@ -3,7 +3,30 @@ import UIKit
 
 class ViewController: UIViewController, UITableViewDataSource {
     
+    @IBOutlet weak var titleTextfield: UITextField!
+    @IBOutlet weak var descriptionTextfield: UITextField!
+    
+    @IBOutlet weak var tableView: UITableView!
+    
     let dataSource = DataSource()
+    
+    @IBAction func addNewRowToTable(_ sender: Any) {
+        guard let title = titleTextfield.text, !title.isEmpty else {
+            return
+        }
+        
+        guard let desc = descriptionTextfield.text, !desc.isEmpty else {
+            return
+        }
+        
+        //create new entry object
+        let entry = DataSource.TableRowEntry(section: .main, title: title, description: desc)
+        
+        //add to the datasource and reload the table view to show the new cell
+        dataSource.pushNewEntry(entry)
+        tableView.reloadData()
+        
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         

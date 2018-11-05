@@ -56,4 +56,8 @@ class DataSource {
         let entriesForSection = ds.filter{ $0.section == section }
         return entriesForSection.count
     }
+    
+    func pushNewEntry(_ newEntry: TableRowEntry) {
+        ds.append(newEntry)
+    }
 }
