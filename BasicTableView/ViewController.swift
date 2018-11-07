@@ -1,7 +1,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource {
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var titleTextfield: UITextField!
     @IBOutlet weak var descriptionTextfield: UITextField!
@@ -64,6 +64,15 @@ class ViewController: UIViewController, UITableViewDataSource {
         self.title = "First View Controller"
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetailOfRow" {
+            guard let detailController = segue.destination as? TableRowDetailViewController, let itemToShow = sender as? UITableViewCell else {
+                return
+            }
 
+            let newItem : DataSource.TableRowEntry = DataSource.TableRowEntry(section: .main, title: itemToShow.textLabel?.text ?? "default", description: itemToShow.detailTextLabel?.text ?? "default")
+            detailController.setItemToDisplay(item: newItem)
+        }
+    }
 }
 
